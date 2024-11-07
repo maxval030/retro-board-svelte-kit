@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import { onMount, tick } from 'svelte';
 	import { Stage, Layer, Rect } from 'svelte-konva';
 	import type { KonvaDragTransformEvent } from 'svelte-konva';
@@ -28,14 +28,6 @@
 			id: new Date().getTime().toString()
 		}
 	]);
-	// let yellowRingConfig = $state({
-	// 	x: 150,
-	// 	y: 150,
-	// 	innerRadius: 80,
-	// 	outerRadius: 120,
-	// 	fill: 'yellow',
-	// 	draggable: true
-	// });
 
 	function handlerDragend(event: KonvaDragTransformEvent) {
 		console.log('🚀 ~ moveEndHandler ~ event:', event);
@@ -73,8 +65,6 @@
 			y: 100,
 			width: 130,
 			height: 150,
-			// stroke: 'black',
-			// strokeWidth: 2,
 			fill: color,
 			draggable: true,
 			id: new Date().getTime().toString()
@@ -96,11 +86,14 @@
 <div>
 	<Stage width={window.innerWidth} height={window.innerHeight}>
 		<Layer>
-			<!-- <Rect x={100} y={100} width={400} height={200} fill="blue" draggable /> -->
 			{#each configPosits as positsItem, i}
 				<Rect
 					cornerRadius={3}
 					{...positsItem}
+					shadowColor="black"
+					shadowBlur={10}
+					shadowOffset={{ x: 10, y: 10 }}
+					shadowOpacity={0.2}
 					ondragend={handlerDragend}
 					ondragstart={handlePositsChangeZIndex}
 					onclick={handlePositsChangeZIndex}
@@ -108,4 +101,4 @@
 			{/each}
 		</Layer>
 	</Stage>
-</div>
+</div> -->
