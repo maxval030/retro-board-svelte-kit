@@ -2,9 +2,10 @@ let isOpenDialogEditPosits = $state<boolean>(false);
 export function dialogEditTextPositsState() {
 	return {
 		setOpenDialogEditPosits(isOpen: boolean) {
-			console.log('setOpenDialogEditPosits', isOpenDialogEditPosits);
-			console.log('isOpen', isOpen);
 			isOpenDialogEditPosits = isOpen;
+		},
+		setOffDialogEditPosits() {
+			isOpenDialogEditPosits = false;
 		},
 		get isOpenDialogEditPosits() {
 			return isOpenDialogEditPosits;
