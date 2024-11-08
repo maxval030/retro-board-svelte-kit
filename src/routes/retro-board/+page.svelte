@@ -5,10 +5,10 @@
 	import type { RectConfig } from 'konva/lib/shapes/Rect';
 	import { Button } from '$lib/components/ui/button';
 
-	import Posits from './posits.svelte';
-	import ColorPick from './colorPick.svelte';
+	import Posits from './Posits.svelte';
+	import ColorPick from './ColorPick.svelte';
 	import { positsState } from './positsState.svelte';
-	import DialogEditTextPosits from './dialogEditTextPosits.svelte';
+	import DialogEditTextPosits from './DialogEditTextPosits.svelte';
 
 	let positsRenderList = $state<RectConfig[]>([]);
 	let clickToCreatePosits = $state(true);
