@@ -1,9 +1,7 @@
 const colorList = ['#c2d5f4', '#c9ffc7', '#ffdef5', '#ffffb7', '#ddfeff'];
 let positsSetColor = $state(colorList[0]);
 
-export function colorPickHandle() {
-	// setContext(ContextName, positsSetColor);
-
+export function colorPickState() {
 	function setColor(color: string) {
 		positsSetColor = color;
 	}

@@ -1,23 +1,35 @@
 <script lang="ts">
 	import { Rect, Group, Text } from 'svelte-konva';
+	import type { KonvaDragTransformEvent, KonvaMouseEvent } from 'svelte-konva';
 	import type { RectConfig } from 'konva/lib/shapes/Rect';
-	import type { KonvaDragTransformEvent } from 'svelte-konva';
 
 	let props: {
 		positsItem: RectConfig;
 		ondragend: (event: KonvaDragTransformEvent) => void;
 		ondragstart: (event: KonvaDragTransformEvent) => void;
-		onclick: (event: KonvaDragTransformEvent) => void;
 	} = $props();
 
 	let name = 'test create';
+	let rectComponent;
+
+	function handlerEditTextPosits(e: KonvaMouseEvent) {
+		const target = e.target;
+
+		target.on('dblclick', () => {
+			// target.get
+			// console.log('🚀 ~ target.on ~ dblclick');
+
+			// document.body.appendChild(textarea);
+		});
+	}
 </script>
 
 <Group
 	draggable
 	ondragend={props.ondragend}
 	ondragstart={props.ondragstart}
-	onclick={props.onclick}
+	onclick={handlerEditTextPosits}
+	id={`group-${props.positsItem.id}`}
 >
 	<Rect
 		cornerRadius={3}
