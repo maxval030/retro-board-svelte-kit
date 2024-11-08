@@ -16,7 +16,7 @@
 	}
 
 	function handlePositsChangeZIndex(event: KonvaDragTransformEvent) {
-		if (clickToCreatePosits) return;
+		// if (clickToCreatePosits) return;
 		let target = event.target;
 
 		target.moveToTop();
