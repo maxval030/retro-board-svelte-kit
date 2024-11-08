@@ -2,6 +2,7 @@
 	import { Rect, Group, Text } from 'svelte-konva';
 	import type { KonvaDragTransformEvent, KonvaMouseEvent } from 'svelte-konva';
 	import type { RectConfig } from 'konva/lib/shapes/Rect';
+	import { dialogEditTextPositsState } from './dialogEditTextPositsState.svelte';
 
 	let props: {
 		positsItem: RectConfig;
@@ -13,12 +14,13 @@
 	let rectComponent;
 
 	function handlerEditTextPosits(e: KonvaMouseEvent) {
+		const { setOpenDialogEditPosits } = dialogEditTextPositsState();
 		const target = e.target;
 
 		target.on('dblclick', () => {
+			console.log('🚀 ~ target.on ~ dblclick');
+			setOpenDialogEditPosits(true);
 			// target.get
-			// console.log('🚀 ~ target.on ~ dblclick');
-
 			// document.body.appendChild(textarea);
 		});
 	}

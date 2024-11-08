@@ -1,7 +1,7 @@
 import type { RectConfig } from 'konva/lib/shapes/Rect';
 import { colorPickState } from './colorPickState.svelte';
 
-const positsList = $state<RectConfig[]>([]);
+let positsList = $state<RectConfig[]>([]);
 
 type PositionPointer = {
 	x: number;
@@ -25,6 +25,9 @@ export function positsState() {
 	return {
 		setPositsList(positionPointer: PositionPointer) {
 			setPositsList(positionPointer);
+		},
+		clearPositsList() {
+			positsList = [];
 		},
 		get positsList() {
 			return positsList;

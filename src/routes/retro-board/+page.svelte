@@ -1,16 +1,19 @@
 <script lang="ts">
 	import { onMount, tick } from 'svelte';
-	import { Stage, Layer, Rect } from 'svelte-konva';
+	import { Stage, Layer } from 'svelte-konva';
 	import type { KonvaDragTransformEvent, KonvaMouseEvent } from 'svelte-konva';
 	import type { RectConfig } from 'konva/lib/shapes/Rect';
+	import { Button } from '$lib/components/ui/button';
 
 	import Posits from './posits.svelte';
 	import ColorPick from './colorPick.svelte';
-	import { colorPickState } from './colorPickState.svelte';
 	import { positsState } from './positsState.svelte';
+	import DialogEditTextPosits from './dialogEditTextPosits.svelte';
 
 	let positsRenderList = $state<RectConfig[]>([]);
 	let clickToCreatePosits = $state(true);
+
+	const { setPositsList, clearPositsList } = positsState();
 
 	function handlerDragend(event: KonvaDragTransformEvent) {
 		// console.log('🚀 ~ moveEndHandler ~ event:', event);
@@ -26,7 +29,6 @@
 	function addPosits(e: KonvaMouseEvent) {
 		if (!clickToCreatePosits) return;
 
-		const { setPositsList } = positsState();
 		const positionPointer = e.target.getRelativePointerPosition();
 
 		const otherLayer = e.target.getLayer();
@@ -46,7 +48,7 @@
 </script>
 
 <div>
-	<button onclick={() => (positsRenderList = [])}>clear all</button>
+	<Button onclick={clearPositsList}>clear all</Button>
 	<label
 		><input type="checkbox" bind:checked={clickToCreatePosits} />
 		Click to create posits
@@ -62,4 +64,5 @@
 			</Layer>
 		</Stage>
 	</div>
+	<DialogEditTextPosits />
 </div>
