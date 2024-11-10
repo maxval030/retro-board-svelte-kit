@@ -49,6 +49,7 @@
 	"dependencies": {
 		"konva": "^9.3.16",
 		"socket.io-client": "^4.8.1",
-		"svelte-konva": "^1.0.0-next"
+		"svelte-konva": "^1.0.0-next",
+		"uuidv7": "^1.0.2"
 	}
 }

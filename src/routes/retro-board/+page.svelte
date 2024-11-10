@@ -7,13 +7,14 @@
 
 	import Posits from './Posits.svelte';
 	import ColorPick from './ColorPick.svelte';
-	import { positsState } from './positsState.svelte';
+	import { handlePositsListState, handlePositsState } from './positsState.svelte';
 	import DialogEditTextPosits from './DialogEditTextPosits.svelte';
 
 	let positsRenderList = $state<RectConfig[]>([]);
+	let positsId = $state<string | undefined>('');
 	let clickToCreatePosits = $state(true);
 
-	const { setPositsList, clearPositsList } = positsState();
+	const { setPositsList, clearPositsList } = handlePositsListState();
 
 	function handlerDragend(event: KonvaDragTransformEvent) {
 		// console.log('🚀 ~ moveEndHandler ~ event:', event);
@@ -41,9 +42,15 @@
 	}
 
 	$effect(() => {
-		const { positsList } = positsState();
+		const { positsList } = handlePositsListState();
 
 		positsRenderList = positsList;
+	});
+
+	$effect(() => {
+		const { positsIdSelected } = handlePositsState();
+
+		positsId = positsIdSelected;
 	});
 </script>
 
@@ -64,5 +71,5 @@
 			</Layer>
 		</Stage>
 	</div>
-	<DialogEditTextPosits />
+	<DialogEditTextPosits positsId={positsId} />
 </div>

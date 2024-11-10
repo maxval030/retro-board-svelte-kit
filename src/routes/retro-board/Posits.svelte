@@ -3,6 +3,7 @@
 	import type { KonvaDragTransformEvent, KonvaMouseEvent } from 'svelte-konva';
 	import type { RectConfig } from 'konva/lib/shapes/Rect';
 	import { dialogEditTextPositsState } from './dialogEditTextPositsState.svelte';
+	import { handlePositsState } from './positsState.svelte';
 
 	let props: {
 		positsItem: RectConfig;
@@ -11,19 +12,20 @@
 	} = $props();
 
 	let name = 'test create';
-	let rectComponent;
 
 	function handlerEditTextPosits(e: KonvaMouseEvent) {
 		const { setOpenDialogEditPosits } = dialogEditTextPositsState();
-		const target = e.target;
+		const {setPosits} = handlePositsState()
 
+		const target = e.target;
 		target.on('dblclick', () => {
-			console.log('🚀 ~ target.on ~ dblclick');
-			setOpenDialogEditPosits(true);
+			setOpenDialogEditPosits();
+			setPosits(props.positsItem.id)
 			// target.get
 			// document.body.appendChild(textarea);
 		});
 	}
+
 </script>
 
 <Group
@@ -40,6 +42,7 @@
 		shadowBlur={10}
 		shadowOffset={{ x: 10, y: 10 }}
 		shadowOpacity={0.2}
+		
 	/>
 	<Text
 		text={`cr: ${name}`}
