@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { colorPickHandle } from './colorPickHandler.svelte';
+	import { colorPickState } from './colorPickState.svelte';
 	let color = $state<string>('');
 
-	const { colorList, setColor } = colorPickHandle();
+	const { colorList, setColor } = colorPickState();
 
 	$effect(() => {
 		// setColor();
 		// colorPickHandle();
-		const { positsSetColor } = colorPickHandle();
+		const { positsSetColor } = colorPickState();
 		color = positsSetColor;
 	});
 </script>
