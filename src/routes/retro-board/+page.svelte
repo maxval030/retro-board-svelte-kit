@@ -7,11 +7,15 @@
 
 	import Posits from './Posits.svelte';
 	import ColorPick from './ColorPick.svelte';
-	import { handlePositsListState, handlePositsState } from './positsState.svelte';
-	import DialogEditTextPosits from './DialogEditTextPosits.svelte';
+	import {
+		handlePositsListState,
+		handlePositsState,
+		type PositsListType
+	} from './positsState.svelte';
+	import DialogEditTextPosits from './DialogTextPosits.svelte';
 
-	let positsRenderList = $state<RectConfig[]>([]);
-	let positsId = $state<string | undefined>('');
+	let positsRenderList = $state<PositsListType[]>([]);
+	let posits = $state<PositsListType | undefined>();
 	let clickToCreatePosits = $state(true);
 
 	const { setPositsList, clearPositsList } = handlePositsListState();
@@ -48,9 +52,9 @@
 	});
 
 	$effect(() => {
-		const { positsIdSelected } = handlePositsState();
+		const { positsSelected } = handlePositsState();
 
-		positsId = positsIdSelected;
+		posits = positsSelected;
 	});
 </script>
 
@@ -71,5 +75,7 @@
 			</Layer>
 		</Stage>
 	</div>
-	<DialogEditTextPosits positsId={positsId} />
+	{#if posits}
+		<DialogEditTextPosits positsSelected={posits} />
+	{/if}
 </div>

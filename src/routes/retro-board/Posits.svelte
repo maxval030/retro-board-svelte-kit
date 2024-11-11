@@ -1,31 +1,36 @@
 <script lang="ts">
 	import { Rect, Group, Text } from 'svelte-konva';
 	import type { KonvaDragTransformEvent, KonvaMouseEvent } from 'svelte-konva';
-	import type { RectConfig } from 'konva/lib/shapes/Rect';
-	import { dialogEditTextPositsState } from './dialogEditTextPositsState.svelte';
-	import { handlePositsState } from './positsState.svelte';
+	import { dialogTextPositsState } from './dialogTextPositsState.svelte';
+	import { handlePositsState, type PositsListType } from './positsState.svelte';
 
 	let props: {
-		positsItem: RectConfig;
+		positsItem: PositsListType;
 		ondragend: (event: KonvaDragTransformEvent) => void;
 		ondragstart: (event: KonvaDragTransformEvent) => void;
 	} = $props();
 
 	let name = 'test create';
+	let positsText = $state<string>('');
 
 	function handlerEditTextPosits(e: KonvaMouseEvent) {
-		const { setOpenDialogEditPosits } = dialogEditTextPositsState();
-		const {setPosits} = handlePositsState()
+		const { setOpenDialogEditPosits } = dialogTextPositsState();
+		const { setPosits } = handlePositsState();
 
 		const target = e.target;
 		target.on('dblclick', () => {
 			setOpenDialogEditPosits();
-			setPosits(props.positsItem.id)
+			setPosits(props.positsItem);
 			// target.get
 			// document.body.appendChild(textarea);
 		});
 	}
+	
+	$effect(() => {
+		const text = props.positsItem.text;
 
+		positsText = text;
+	});
 </script>
 
 <Group
@@ -42,7 +47,18 @@
 		shadowBlur={10}
 		shadowOffset={{ x: 10, y: 10 }}
 		shadowOpacity={0.2}
-		
+	/>
+	<Text
+		text={positsText}
+		verticalAlign="top"
+		padding={10}
+		fontSize={12}
+		fill="black"
+		align="left"
+		width={130}
+		height={150}
+		x={props.positsItem.x}
+		y={props.positsItem.y}
 	/>
 	<Text
 		text={`cr: ${name}`}

@@ -1,32 +1,32 @@
 <script lang="ts">
-	import type { SvelteComponent } from 'svelte';
-
-	import { Button, buttonVariants } from '$lib/components/ui/button';
+	import { Button } from '$lib/components/ui/button';
 	import * as Dialog from '$lib/components/ui/dialog';
-	import { Input } from '$lib/components/ui/input';
-	import { Label } from '$lib/components/ui/label';
-	import { dialogEditTextPositsState } from './dialogEditTextPositsState.svelte';
+	import { dialogTextPositsState } from './dialogTextPositsState.svelte';
 	import { Textarea, type FormTextareaEvent } from '$lib/components/ui/textarea/index.js';
+	import { handlePositsState, type PositsListType } from './positsState.svelte';
 	type Props = {
-		positsId?: string;
+		positsSelected: PositsListType;
 	};
 
-	let props:Props = $props();
+	let props: Props = $props();
 
 	let isOpen = $state(false);
 
 	let commentRetro = $state('');
-	const { setOffDialogEditPosits } = dialogEditTextPositsState();
+
+	const { setOffDialogEditPosits } = dialogTextPositsState();
+
 	$effect(() => {
-		const { isOpenDialogEditPosits } = dialogEditTextPositsState();
+		const { isOpenDialogEditPosits } = dialogTextPositsState();
 		isOpen = isOpenDialogEditPosits;
-		commentRetro = '';
+		commentRetro = props.positsSelected.text;
 	});
 
-
 	function handlerSubmit() {
-		// e.target.value;
-		setOffDialogEditPosits();
+		const { updatePositsText, clearPositsSelect } = handlePositsState();
+
+		updatePositsText(props.positsSelected, commentRetro);
+		clearPositsSelect();
 	}
 </script>
 
@@ -39,8 +39,8 @@
 	<!-- <Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>Edit Profile</Dialog.Trigger> -->
 	<Dialog.Content class="sm:max-w-[425px]">
 		<Dialog.Header>
-			<Dialog.Title>Type your comment retro </Dialog.Title>
-			<Dialog.DialogTitle>positsID:{props.positsId}</Dialog.DialogTitle>
+			<Dialog.Title>Type your comment retro</Dialog.Title>
+			<!-- <Dialog.DialogTitle>positsID:{props.positsId}</Dialog.DialogTitle> -->
 		</Dialog.Header>
 		<div class="grid gap-4 py-4">
 			<div class="grid grid-cols-4 items-center gap-4">

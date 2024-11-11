@@ -2,8 +2,12 @@ import type { RectConfig } from 'konva/lib/shapes/Rect';
 import { colorPickState } from './colorPickState.svelte';
 import { uuidv7 } from 'uuidv7';
 
-let positsList = $state<RectConfig[]>([]);
-let positsIdSelect = $state<string | undefined>('');
+export type PositsListType = RectConfig & {
+	text: string;
+};
+
+let positsList = $state<PositsListType[]>([]);
+let positsSelect = $state<PositsListType | undefined>();
 type PositionPointer = {
 	x: number;
 	y: number;
@@ -19,7 +23,8 @@ export function handlePositsListState() {
 			height: 150,
 			fill: positsSetColor,
 			draggable: true,
-			id: uuidv7()
+			id: uuidv7(),
+			text: ''
 		});
 	}
 
@@ -37,16 +42,36 @@ export function handlePositsListState() {
 }
 
 export function handlePositsState() {
-	function setPosits(value: string | undefined) {
-		positsIdSelect = value;
+	function setPosits(value: PositsListType) {
+		positsSelect = value;
 	}
 
+	function updatePositsText(positsEdits: PositsListType, text: string) {
+		const { id } = positsEdits;
+
+		if (id) {
+			const posits = positsList.find((posit) => posit.id === id);
+			if (posits) {
+				posits.text = text;
+			}
+		}
+	}
+
+	function clearPositsSelect() {
+		positsSelect = undefined;
+	}
 	return {
-		setPosits(value: string | undefined) {
+		setPosits(value: PositsListType) {
 			setPosits(value);
 		},
-		get positsIdSelected() {
-			return positsIdSelect;
+		updatePositsText(positsEdits: PositsListType, text: string) {
+			updatePositsText(positsEdits, text);
+		},
+		clearPositsSelect() {
+			clearPositsSelect();
+		},
+		get positsSelected() {
+			return positsSelect;
 		}
 	};
 }
