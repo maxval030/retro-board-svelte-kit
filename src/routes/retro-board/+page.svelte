@@ -13,6 +13,7 @@
 		type PositsListType
 	} from './positsState.svelte';
 	import DialogEditTextPosits from './DialogTextPosits.svelte';
+	import PrivateMode from './PrivateMode.svelte';
 
 	let positsRenderList = $state<PositsListType[]>([]);
 	let posits = $state<PositsListType | undefined>();
@@ -60,13 +61,14 @@
 
 <div>
 	<Button onclick={clearPositsList}>clear all</Button>
-	<label
-		><input type="checkbox" bind:checked={clickToCreatePosits} />
+	<label>
+		<input type="checkbox" bind:checked={clickToCreatePosits} />
 		Click to create posits
 	</label>
 
 	<div>
 		<ColorPick />
+		<PrivateMode />
 		<Stage width={window.innerWidth} height={window.innerHeight} onclick={addPosits} draggable>
 			<Layer width={window.innerWidth} height={window.innerHeight}>
 				{#each positsRenderList as positsItem, i}
