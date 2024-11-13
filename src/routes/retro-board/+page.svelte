@@ -59,23 +59,31 @@
 	});
 </script>
 
-<div>
-	<Button onclick={clearPositsList}>clear all</Button>
-	<label>
-		<input type="checkbox" bind:checked={clickToCreatePosits} />
-		Click to create posits
-	</label>
-
-	<div>
+<div class={'relative'}>
+	<div class={'absolute left-5 top-5 z-30 w-1/4 rounded-lg border border-cyan-400 bg-white p-3'}>
+		<Button onclick={clearPositsList}>clear all</Button>
+		<label>
+			<input type="checkbox" bind:checked={clickToCreatePosits} />
+			Click to create posits
+		</label>
 		<ColorPick />
 		<PrivateMode />
-		<Stage width={window.innerWidth} height={window.innerHeight} onclick={addPosits} draggable>
-			<Layer width={window.innerWidth} height={window.innerHeight}>
-				{#each positsRenderList as positsItem, i}
-					<Posits {positsItem} ondragend={handlerDragend} ondragstart={handlePositsChangeZIndex} />
-				{/each}
-			</Layer>
-		</Stage>
+	</div>
+
+	<div>
+		<div class="mt-2 h-screen w-screen border border-sky-500">
+			<Stage width={window.innerWidth} height={window.innerHeight} onclick={addPosits} draggable>
+				<Layer width={window.innerWidth} height={window.innerHeight}>
+					{#each positsRenderList as positsItem, i}
+						<Posits
+							{positsItem}
+							ondragend={handlerDragend}
+							ondragstart={handlePositsChangeZIndex}
+						/>
+					{/each}
+				</Layer>
+			</Stage>
+		</div>
 	</div>
 	{#if posits}
 		<DialogEditTextPosits positsSelected={posits} />
