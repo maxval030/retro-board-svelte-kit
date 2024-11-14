@@ -3,7 +3,7 @@
 	import type { KonvaDragTransformEvent, KonvaMouseEvent } from 'svelte-konva';
 	import { dialogTextPositsState } from './dialogTextPositsState.svelte';
 	import { handlePositsState, type PositsListType } from './positsState.svelte';
-
+	const fontSizeText = 16;
 	let props: {
 		positsItem: PositsListType;
 		ondragend: (event: KonvaDragTransformEvent) => void;
@@ -25,7 +25,7 @@
 			// document.body.appendChild(textarea);
 		});
 	}
-	
+
 	$effect(() => {
 		const text = props.positsItem.text;
 
@@ -52,7 +52,7 @@
 		text={positsText}
 		verticalAlign="top"
 		padding={10}
-		fontSize={12}
+		fontSize={fontSizeText}
 		fill="black"
 		align="left"
 		width={130}
@@ -63,7 +63,7 @@
 	<Text
 		text={`cr: ${name}`}
 		verticalAlign="bottom"
-		fontSize={12}
+		fontSize={fontSizeText}
 		fill="black"
 		align="right"
 		width={130}
