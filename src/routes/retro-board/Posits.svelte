@@ -3,6 +3,7 @@
 	import type { KonvaDragTransformEvent, KonvaMouseEvent } from 'svelte-konva';
 	import { dialogTextPositsState } from './dialogTextPositsState.svelte';
 	import { handlePositsState, type PositsListType } from './positsState.svelte';
+	import { privateButtonState } from './privateButtonState.svelte';
 	const fontSizeText = 16;
 	let props: {
 		positsItem: PositsListType;
@@ -28,7 +29,13 @@
 
 	$effect(() => {
 		const text = props.positsItem.text;
+		const { isPrivateMode } = privateButtonState();
 
+		if (isPrivateMode) {
+			positsText = text.replace(/./g, '~');
+
+			return;
+		}
 		positsText = text;
 	});
 </script>

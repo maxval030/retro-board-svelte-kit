@@ -4,6 +4,7 @@
 	import { dialogTextPositsState } from './dialogTextPositsState.svelte';
 	import { Textarea, type FormTextareaEvent } from '$lib/components/ui/textarea/index.js';
 	import { handlePositsState, type PositsListType } from './positsState.svelte';
+
 	type Props = {
 		positsSelected: PositsListType;
 	};
@@ -23,10 +24,9 @@
 	});
 
 	function handlerSubmit() {
-		const { updatePositsText, clearPositsSelect } = handlePositsState();
-
+		const { updatePositsText } = handlePositsState();
 		updatePositsText(props.positsSelected, commentRetro);
-		clearPositsSelect();
+		setOffDialogEditPosits();
 	}
 </script>
 

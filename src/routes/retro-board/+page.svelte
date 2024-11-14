@@ -13,11 +13,13 @@
 		type PositsListType
 	} from './positsState.svelte';
 	import DialogEditTextPosits from './DialogTextPosits.svelte';
-	import PrivateMode from './PrivateMode.svelte';
+	import PrivateMode from './PrivateButton.svelte';
+	import { dialogTextPositsState } from './dialogTextPositsState.svelte';
 
 	let positsRenderList = $state<PositsListType[]>([]);
 	let posits = $state<PositsListType | undefined>();
 	let clickToCreatePosits = $state(true);
+	let isOpenDialogEdit = $state(false);
 
 	const { setPositsList, clearPositsList } = handlePositsListState();
 
@@ -57,6 +59,11 @@
 
 		posits = positsSelected;
 	});
+
+	$effect(() => {
+		const { isOpenDialogEditPosits } = dialogTextPositsState();
+		isOpenDialogEdit = isOpenDialogEditPosits;
+	});
 </script>
 
 <div class={'relative'}>
@@ -71,8 +78,9 @@
 	</div>
 
 	<div>
-		<div class="mt-2 h-screen w-screen border border-sky-500">
-			<Stage width={window.innerWidth} height={window.innerHeight} onclick={addPosits} draggable>
+		<div class="mt-2 h-screen w-full border border-sky-500">
+			<!-- <Stage width={window.innerWidth} height={window.innerHeight} onclick={addPosits} draggable> -->
+			<Stage width={1920} height={1080} onclick={addPosits} draggable>
 				<Layer width={window.innerWidth} height={window.innerHeight}>
 					{#each positsRenderList as positsItem, i}
 						<Posits
@@ -85,7 +93,7 @@
 			</Stage>
 		</div>
 	</div>
-	{#if posits}
+	{#if posits && isOpenDialogEdit}
 		<DialogEditTextPosits positsSelected={posits} />
 	{/if}
 </div>

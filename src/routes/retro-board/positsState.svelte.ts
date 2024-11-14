@@ -57,18 +57,12 @@ export function handlePositsState() {
 		}
 	}
 
-	function clearPositsSelect() {
-		positsSelect = undefined;
-	}
 	return {
 		setPosits(value: PositsListType) {
 			setPosits(value);
 		},
 		updatePositsText(positsEdits: PositsListType, text: string) {
 			updatePositsText(positsEdits, text);
-		},
-		clearPositsSelect() {
-			clearPositsSelect();
 		},
 		get positsSelected() {
 			return positsSelect;
