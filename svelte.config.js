@@ -14,9 +14,6 @@ const config = {
 		adapter: adapter(),
 		alias: {
 			'@/*': './path/to/lib/*'
-		},
-		inspector: {
-			holdMode: true
 		}
 	}
 };
