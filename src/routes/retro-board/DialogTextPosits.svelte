@@ -30,17 +30,10 @@
 	}
 </script>
 
-<Dialog.Root
-	open={isOpen}
-	onOpenChange={() => setOffDialogEditPosits()}
-	closeOnOutsideClick={false}
-	closeOnEscape
->
-	<!-- <Dialog.Trigger class={buttonVariants({ variant: 'outline' })}>Edit Profile</Dialog.Trigger> -->
+<Dialog.Root open={isOpen} onOpenChange={() => setOffDialogEditPosits()}>
 	<Dialog.Content class="sm:max-w-[425px]">
 		<Dialog.Header>
 			<Dialog.Title>Type your comment retro</Dialog.Title>
-			<!-- <Dialog.DialogTitle>positsID:{props.positsId}</Dialog.DialogTitle> -->
 		</Dialog.Header>
 		<div class="grid gap-4 py-4">
 			<div class="grid grid-cols-4 items-center gap-4">
@@ -53,7 +46,7 @@
 			</div>
 		</div>
 		<Dialog.Footer>
-			<Button on:click={handlerSubmit}>Submit</Button>
+			<Button onclick={handlerSubmit}>Submit</Button>
 		</Dialog.Footer>
 	</Dialog.Content>
 </Dialog.Root>

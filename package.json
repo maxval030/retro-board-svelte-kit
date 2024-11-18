@@ -24,12 +24,12 @@
 		"@tailwindcss/typography": "^0.5.15",
 		"@types/eslint": "^9.6.0",
 		"autoprefixer": "^10.4.20",
-		"bits-ui": "^0.21.16",
+		"bits-ui": "1.0.0-next.60",
 		"clsx": "^2.1.1",
 		"eslint": "^9.7.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.36.0",
-		"formsnap": "^1.0.1",
+		"formsnap": "2.0.0-next.1",
 		"globals": "^15.0.0",
 		"lucide-svelte": "^0.455.0",
 		"prettier": "^3.3.2",
@@ -52,6 +52,7 @@
 		"pocketbase": "^0.21.5",
 		"socket.io-client": "^4.8.1",
 		"svelte-konva": "^1.0.0-next",
+		"tailwindcss-animate": "^1.0.7",
 		"uuidv7": "^1.0.2"
 	}
 }
