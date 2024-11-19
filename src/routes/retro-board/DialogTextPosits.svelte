@@ -30,7 +30,7 @@
 	}
 </script>
 
-<Dialog.Root open={isOpen} onOpenChange={() => setOffDialogEditPosits()}>
+<Dialog.Root open={isOpen} onOpenChange={() => setOffDialogEditPosits()} controlledOpen>
 	<Dialog.Content class="sm:max-w-[425px]">
 		<Dialog.Header>
 			<Dialog.Title>Type your comment retro</Dialog.Title>
