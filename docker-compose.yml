@@ -19,4 +19,4 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-    # entrypoint: ["sleep", "infinity"]
+    entrypoint: ['sleep', 'infinity']
