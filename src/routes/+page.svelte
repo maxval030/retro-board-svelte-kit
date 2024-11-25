@@ -5,9 +5,7 @@
 	// import { PUBLIC_END_POINT_POCKETBASE_URL } from '$env/static/public';
 	// console.log(PUBLIC_END_POINT_POCKETBASE_URL);
 	onMount(async () => {
-		const resultList = await pb.collection('users').getList(1, 50, {
-			filter: 'someField1 != someField2'
-		});
+		const resultList = await pb.collection('itemsOnBoard').getList(1, 50);
 
 		console.log('🚀 ~ resultList:', resultList);
 	});
