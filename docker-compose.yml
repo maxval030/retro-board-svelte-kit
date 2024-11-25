@@ -4,11 +4,11 @@ services:
     image: ghcr.io/muchobien/pocketbase:latest
     container_name: pocketbase
     restart: unless-stopped
-    command:
-      - --encryptionEnv
-      - ENCRYPTION # optional
-    environment:
-      ENCRYPTION: $(openssl rand -hex 16) # optional (Ensure this is a 32-character long encryption key https://pocketbase.io/docs/going-to-production/#enable-settings-encryption)
+    # command:
+    #   - --encryptionEnv
+    #   - ENCRYPTION # optional
+    # environment:
+    #   ENCRYPTION: $(openssl rand -hex 16) # optional (Ensure this is a 32-character long encryption key https://pocketbase.io/docs/going-to-production/#enable-settings-encryption)
     ports:
       - '8090:8090'
     volumes:
@@ -20,4 +20,4 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-    entrypoint: ['sleep', '99999']
+    # entrypoint: ['sleep', '99999']
