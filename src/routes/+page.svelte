@@ -9,8 +9,15 @@
 
 		console.log('🚀 ~ resultList:', resultList);
 	});
+
+	async function login() {
+		await pb.collection('users').authWithOAuth2({
+			provider: 'google'
+		});
+	}
 </script>
 
 <div>
 	<Button href="/retro-board">Go to retro board</Button>
+	<Button onclick={login}>logIn</Button>
 </div>
