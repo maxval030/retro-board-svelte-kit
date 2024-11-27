@@ -6,11 +6,12 @@
 		"node": ">=22"
 	},
 	"scripts": {
-		"dev": "vite dev",
+		"dev": "pnpm typegen-pb && vite dev",
 		"build": "vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"typegen-pb": "pnpm dlx pocketbase-typegen --env --out ./src/lib/pocketbase-types.ts",
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint .",
 		"test:unit": "vitest",

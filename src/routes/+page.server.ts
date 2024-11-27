@@ -1,4 +1,5 @@
 import pb from '$lib/pocketbase';
+import { Collections } from '$lib/pocketbase-types';
 import type { Actions } from './$types';
 // import pb from '$lib/pocketbase';
 // import { redirect } from '@sveltejs/kit';
@@ -24,11 +25,11 @@ export const actions = {
 	createTeam: async ({ request }) => {
 		// console.log('🚀 ~ default: ~ request:', request);
 		const data = await request.formData();
-		console.log('🚀 ~ testNaja: ~ data:', data);
+
 		const dataToCreate = {
 			title: data.get('teamTitle')
 		};
-		await pb.collection('teams').create(dataToCreate);
+		await pb.collection(Collections.Teams).create(dataToCreate);
 		// const form = await superValidate(event, zod(formSchema));
 		// if (!form.valid) {
 		// 	return fail(400, {

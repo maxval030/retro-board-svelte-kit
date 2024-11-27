@@ -1,15 +1,8 @@
 <script>
 	import Button from '$lib/components/ui/button/button.svelte';
 	import pb from '$lib/pocketbase';
-	import { onMount } from 'svelte';
-	import TeamList from '../components/teams/TeamList.svelte';
-	// import { PUBLIC_END_POINT_POCKETBASE_URL } from '$env/static/public';
-	// console.log(PUBLIC_END_POINT_POCKETBASE_URL);
-	onMount(async () => {
-		const resultList = await pb.collection('itemsOnBoard').getList(1, 50);
 
-		console.log('🚀 ~ resultList:', resultList);
-	});
+	import TeamList from '../components/teams/TeamList.svelte';
 
 	async function login() {
 		await pb.collection('users').authWithOAuth2({
