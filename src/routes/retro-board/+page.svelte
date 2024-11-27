@@ -1,20 +1,20 @@
 <script lang="ts">
-	import { onMount, tick } from 'svelte';
 	import { Stage, Layer } from 'svelte-konva';
 	import type { KonvaDragTransformEvent, KonvaMouseEvent } from 'svelte-konva';
-	import type { RectConfig } from 'konva/lib/shapes/Rect';
 	import { Button } from '$lib/components/ui/button';
 
-	import Posits from './Posits.svelte';
-	import ColorPick from './ColorPick.svelte';
+	import ColorPick from '../../components/retroBoards/ColorPick.svelte';
+
+	import PrivateButton from '../../components/retroBoards/PrivateButton.svelte';
+	import DialogEditTextPosits from '../../components/retroBoards/DialogTextPosits.svelte';
+
+	import Posits from '../../components/retroBoards/Posits.svelte';
 	import {
 		handlePositsListState,
 		handlePositsState,
 		type PositsListType
-	} from './positsState.svelte';
-	import DialogEditTextPosits from './DialogTextPosits.svelte';
-	import PrivateMode from './PrivateButton.svelte';
-	import { dialogTextPositsState } from './dialogTextPositsState.svelte';
+	} from '../../components/retroBoards/positsState.svelte';
+	import { dialogTextPositsState } from '../../components/retroBoards/dialogTextPositsState.svelte';
 
 	let positsRenderList = $state<PositsListType[]>([]);
 	let posits = $state<PositsListType | undefined>();
@@ -74,7 +74,7 @@
 			Click to create posits
 		</label>
 		<ColorPick />
-		<PrivateMode />
+		<PrivateButton />
 	</div>
 
 	<div>
