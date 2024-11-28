@@ -2,19 +2,16 @@
 	import { Stage, Layer } from 'svelte-konva';
 	import type { KonvaDragTransformEvent, KonvaMouseEvent } from 'svelte-konva';
 	import { Button } from '$lib/components/ui/button';
-
-	import ColorPick from '../../components/retroBoards/ColorPick.svelte';
-
-	import PrivateButton from '../../components/retroBoards/PrivateButton.svelte';
-	import DialogEditTextPosits from '../../components/retroBoards/DialogTextPosits.svelte';
-
-	import Posits from '../../components/retroBoards/Posits.svelte';
 	import {
 		handlePositsListState,
 		handlePositsState,
 		type PositsListType
-	} from '../../components/retroBoards/positsState.svelte';
-	import { dialogTextPositsState } from '../../components/retroBoards/dialogTextPositsState.svelte';
+	} from '../../../../components/retroBoards/positsState.svelte';
+	import { dialogTextPositsState } from '../../../../components/retroBoards/dialogTextPositsState.svelte';
+	import ColorPick from '../../../../components/retroBoards/ColorPick.svelte';
+	import PrivateButton from '../../../../components/retroBoards/PrivateButton.svelte';
+	import Posits from '../../../../components/retroBoards/Posits.svelte';
+	import DialogEditTextPosits from '../../../../components/retroBoards/DialogTextPosits.svelte';
 
 	let positsRenderList = $state<PositsListType[]>([]);
 	let posits = $state<PositsListType | undefined>();

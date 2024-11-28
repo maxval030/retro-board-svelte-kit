@@ -11,7 +11,7 @@
 
 	function redirectToTeamDetail() {
 		console.log('Redirect to Team Detail');
-		goto(`/retro-board/${teamDetail.id}`);
+		goto(`/retro-board/list/${teamDetail.id}`);
 	}
 </script>
 
