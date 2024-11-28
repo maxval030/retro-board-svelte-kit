@@ -18,7 +18,7 @@
 
 <Card.Root class="cursor-pointer" onclick={() => setIsOpenDialogCreateTeam(true)}>
 	<Card.Header>
-		<Card.Title>Add New Team</Card.Title>
+		<Card.Title>Add new team</Card.Title>
 	</Card.Header>
 	<Card.Content>
 		<p><Icon icon="solar:add-square-bold" width="30%" height="30%" /></p>
