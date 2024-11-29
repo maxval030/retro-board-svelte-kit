@@ -10,7 +10,6 @@ import pb from '$lib/pocketbase';
 
 export type PositsType = RectConfig & {
 	detail: string;
-	dbId?: string;
 };
 
 let positsList = $state<PositsType[]>([]);
@@ -53,13 +52,22 @@ export function handlePositsListState() {
 	}
 
 	async function handleUpdatePositsPosition(x: number, y: number, id: string) {
-		console.log('🚀 ~ handleUpdatePositsPosition ~ id:', id);
 		if (id) {
-			await pb.collection(Collections.ItemsOnBoard).update(id, {
+			const posit = positsList.find((val) => val.id === id);
+			if (posit) {
+				setUpdatePositsList(posit);
+			}
+			await pb.collection(Collections.ItemsOnBoard).update<PositsType>(id, {
 				x,
 				y
 			});
 		}
+	}
+
+	function setUpdatePositsList(positsDetail: PositsType) {
+		const indexOfPositsList = positsList.findIndex((posit) => posit.id === positsDetail.id);
+
+		positsList[indexOfPositsList] = positsDetail;
 	}
 
 	function setPositsList(positsDetail: PositsType) {
@@ -74,9 +82,7 @@ export function handlePositsListState() {
 			positsList.map((data) => setPositsList(data));
 		},
 		setUpdatePositsList(positsDetail: PositsType) {
-			const indexOfPositsList = positsList.findIndex((posit) => posit.id === positsDetail.id);
-
-			positsList[indexOfPositsList] = positsDetail;
+			setUpdatePositsList(positsDetail);
 		},
 		async handleCreatePosits(positionPointer: PositionPointer, boardId: string) {
 			await handleCreatePosits(positionPointer, boardId);

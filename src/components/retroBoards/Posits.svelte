@@ -41,6 +41,7 @@
 	});
 </script>
 
+<!-- ondragend={props.ondragend} -->
 <Group
 	draggable
 	ondragend={props.ondragend}

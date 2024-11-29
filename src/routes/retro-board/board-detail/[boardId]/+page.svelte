@@ -32,29 +32,23 @@
 		handleUpdatePositsPosition
 	} = handlePositsListState();
 
-	async function handlerDragend(event: KonvaDragTransformEvent) {
+	async function handlerDragEnd(event: KonvaDragTransformEvent) {
+		const positsById = positsRenderList.find((item) => item.id === event.target.attrs.id);
+
+		const defaultX = positsById?.x ?? 0;
+		const defaultY = positsById?.y ?? 0;
 		const tempEvent = event.target;
+		// console.log('event>>>', event);
 
-		const id = tempEvent.attrs.id;
-		// const x = event.target.x();
-		// const y = event.target.y();
-		// const test = event.currentTarget.getTransform()
-		// const x = event.currentTarget.x();
-		// const y = event.currentTarget.y();
-		const positionPointer = event.target.getRelativePointerPosition();
-		console.log('🚀 ~ handlerDragend ~ positionPointer:', positionPointer);
+		const { x, y } = tempEvent.position();
+		console.log('🚀 ~ handlerDragEnd ~  x, y:', x, y);
 
-		// console.log('x>>>', x, 'y>>>>', y);
-		// const newX = x - newPosition?.x!;
-		// const newY = y - newPosition?.y!;
-		// event.currentTarget.stopDrag();
-		// console.log('🚀 ~ handlerDragend ~ newPosition:', newPosition);
-		// console.log('🚀 ~ handlerDragend ~ y:', y);
-		// console.log('🚀 ~ handlerDragend ~ x:', x);
+		const positionX = defaultX + x;
+		console.log('🚀 ~ handlerDragEnd ~ positionX:', positionX);
+		const positionY = defaultY + y;
+		console.log('🚀 ~ handlerDragEnd ~ positionY:', positionY);
 
-		// await handleUpdatePositsPosition(a?.x!, a?.y!, id);
-		await handleUpdatePositsPosition(positionPointer?.x!, positionPointer?.y!, id);
-		// handleUpdatePosits
+		await handleUpdatePositsPosition(positionX, positionY, positsById?.id!);
 	}
 
 	function handlePositsChangeZIndex(event: KonvaDragTransformEvent) {
@@ -72,7 +66,6 @@
 		const otherLayer = e.target.getLayer();
 
 		if (otherLayer) return;
-		// e.target.on('dblclick', () => {
 
 		await handleCreatePosits(positionPointer!, data.boardId);
 		// });
@@ -138,6 +131,7 @@
 					});
 					break;
 				case 'update':
+					console.log("TESTasdasd")
 					const itemOnBoardUpdate = await pb
 						.collection(Collections.ItemsOnBoard)
 						.getOne<ItemsOnBoardResponse>(record.id);
@@ -152,27 +146,7 @@
 						draggable: itemOnBoardUpdate.draggable,
 						detail: itemOnBoardUpdate.detail
 					});
-					// const positsListUpdate = positsRenderList.find(
-					// 	(item) => item.id === itemOnBoardUpdate.id
-					// );
-					// const positsListUpdate = positsRenderList.((item) => {
-					// 	if (item.id === itemOnBoardUpdate.id) {
-					// 		return {
-					// 			id: itemOnBoardUpdate.id,
-					// 			x: itemOnBoardUpdate.x,
-					// 			y: itemOnBoardUpdate.y,
-					// 			width: itemOnBoardUpdate.width,
-					// 			height: itemOnBoardUpdate.height,
-					// 			fill: itemOnBoardUpdate.fill,
-					// 			draggable: itemOnBoardUpdate.draggable,
-					// 			detail: itemOnBoardUpdate.detail
-					// 		};
-					// 	}
-					// 	return item;
-					// });
 
-					// positsRenderList = positsListUpdate;
-					// setPositsToList
 					break;
 				case 'delete':
 					const positsListDelete = positsRenderList.filter((item) => item.id !== record.id);
@@ -223,7 +197,7 @@
 					{#each positsRenderList as positsItem, i}
 						<Posits
 							{positsItem}
-							ondragend={handlerDragend}
+							ondragend={handlerDragEnd}
 							ondragstart={handlePositsChangeZIndex}
 						/>
 					{/each}
