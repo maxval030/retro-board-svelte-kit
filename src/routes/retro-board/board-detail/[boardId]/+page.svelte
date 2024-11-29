@@ -41,12 +41,8 @@
 		// const test = event.currentTarget.getTransform()
 		// const x = event.currentTarget.x();
 		// const y = event.currentTarget.y();
-		const stage = event.target.getStage();
-		const pointerPosition = stage?.getPointerPosition()!;
-		const offset = { x: event.target.attrs.x, y: event.target.attrs.y };
-
-		const shapeClickX = pointerPosition.x - offset.x;
-		const shapeClickY = pointerPosition.y - offset.y;
+		const positionPointer = event.target.getRelativePointerPosition();
+		console.log('🚀 ~ handlerDragend ~ positionPointer:', positionPointer);
 
 		// console.log('x>>>', x, 'y>>>>', y);
 		// const newX = x - newPosition?.x!;
@@ -57,7 +53,7 @@
 		// console.log('🚀 ~ handlerDragend ~ x:', x);
 
 		// await handleUpdatePositsPosition(a?.x!, a?.y!, id);
-		await handleUpdatePositsPosition(shapeClickX, shapeClickY, id);
+		await handleUpdatePositsPosition(positionPointer?.x!, positionPointer?.y!, id);
 		// handleUpdatePosits
 	}
 

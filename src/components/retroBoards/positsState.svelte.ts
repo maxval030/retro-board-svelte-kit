@@ -53,6 +53,7 @@ export function handlePositsListState() {
 	}
 
 	async function handleUpdatePositsPosition(x: number, y: number, id: string) {
+		console.log('🚀 ~ handleUpdatePositsPosition ~ id:', id);
 		if (id) {
 			await pb.collection(Collections.ItemsOnBoard).update(id, {
 				x,
