@@ -6,7 +6,9 @@
 	import { Collections, type TeamsRecord, type TeamsResponse } from '$lib/pocketbase-types';
 	let teamList: TeamsResponse[] = $state([]);
 	onMount(async () => {
-		const result = await pb.collection(Collections.Teams).getList<TeamsResponse>();
+		const result = await pb
+			.collection(Collections.Teams)
+			.getList<TeamsResponse>(1, 20, { sort: '-updated' });
 		teamList = result.items;
 	});
 </script>

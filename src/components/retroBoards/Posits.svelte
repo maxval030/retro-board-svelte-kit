@@ -2,11 +2,12 @@
 	import { Rect, Group, Text } from 'svelte-konva';
 	import type { KonvaDragTransformEvent, KonvaMouseEvent } from 'svelte-konva';
 	import { dialogTextPositsState } from './dialogTextPositsState.svelte';
-	import { handlePositsState, type PositsListType } from './positsState.svelte';
+	import { handlePositsState, type PositsType } from './positsState.svelte';
 	import { privateButtonState } from './privateButtonState.svelte';
+	import { onMount } from 'svelte';
 	const fontSizeText = 16;
 	let props: {
-		positsItem: PositsListType;
+		positsItem: PositsType;
 		ondragend: (event: KonvaDragTransformEvent) => void;
 		ondragstart: (event: KonvaDragTransformEvent) => void;
 	} = $props();
@@ -28,7 +29,7 @@
 	}
 
 	$effect(() => {
-		const text = props.positsItem.text;
+		const text = props.positsItem.detail;
 		const { isPrivateMode } = privateButtonState();
 
 		if (isPrivateMode) {
@@ -45,7 +46,7 @@
 	ondragend={props.ondragend}
 	ondragstart={props.ondragstart}
 	onclick={handlerEditTextPosits}
-	id={`group-${props.positsItem.id}`}
+	id={props.positsItem.id}
 >
 	<Rect
 		cornerRadius={3}

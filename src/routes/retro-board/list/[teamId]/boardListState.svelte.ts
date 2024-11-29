@@ -9,7 +9,8 @@ export function handlerRetroBoardState() {
 		const result = await pb
 			.collection(Collections.RetroBoards)
 			.getList<RetroBoardsResponse>(page, limit, {
-				filter: pb.filter('teamId={:teamId}', { teamId })
+				filter: pb.filter('teamId={:teamId}', { teamId }),
+				sort: '-updated'
 			});
 
 		retroBoardListByTeamId = result.items;
@@ -38,7 +39,10 @@ export function handlerRetroBoardState() {
 		setTeamId(teamId: string) {
 			teamIdState = teamId;
 		},
-		clearRetroBoardListByTeamId(){
+		clearTeamId() {
+			teamIdState = '';
+		},
+		clearRetroBoardListByTeamId() {
 			retroBoardListByTeamId = [];
 		},
 		// updatePositsText(positsEdits: PositsListType, text: string) {
@@ -46,6 +50,9 @@ export function handlerRetroBoardState() {
 		// },
 		get retroBoardListByTeamId() {
 			return retroBoardListByTeamId;
+		},
+		get teamIdState() {
+			return teamIdState;
 		}
 	};
 }

@@ -3,10 +3,10 @@
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { dialogTextPositsState } from './dialogTextPositsState.svelte';
 	import { Textarea, type FormTextareaEvent } from '$lib/components/ui/textarea/index.js';
-	import { handlePositsState, type PositsListType } from './positsState.svelte';
+	import { handlePositsState, type PositsType } from './positsState.svelte';
 
 	type Props = {
-		positsSelected: PositsListType;
+		positsSelected: PositsType;
 	};
 
 	let props: Props = $props();
@@ -20,7 +20,7 @@
 	$effect(() => {
 		const { isOpenDialogEditPosits } = dialogTextPositsState();
 		isOpen = isOpenDialogEditPosits;
-		commentRetro = props.positsSelected.text;
+		commentRetro = props.positsSelected.detail;
 	});
 
 	function handlerSubmit() {

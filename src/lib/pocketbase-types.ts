@@ -92,16 +92,18 @@ export enum ItemsOnBoardTypeItemOptions {
 	"posits" = "posits",
 }
 export type ItemsOnBoardRecord = {
-	color?: string
 	created?: IsoDateString
 	createdByUserId?: RecordIdString
 	detail?: string
 	draggable?: boolean
+	fill?: string
+	height: number
 	holderByUserId?: RecordIdString
 	id: string
 	retroboardId?: RecordIdString
 	typeItem: ItemsOnBoardTypeItemOptions
 	updated?: IsoDateString
+	width: number
 	x?: number
 	y?: number
 }
