@@ -64,12 +64,22 @@ export function handlePositsListState() {
 		}
 	}
 
+<<<<<<< Updated upstream
 	function setUpdatePositsList(positsDetail: PositsType) {
 		const indexOfPositsList = positsList.findIndex((posit) => posit.id === positsDetail.id);
 
 		positsList[indexOfPositsList] = positsDetail;
 	}
 
+=======
+	async function handleUpdatePositsComment(id: string, detail: string) {
+		if (id) {
+			await pb.collection(Collections.ItemsOnBoard).update(id, {
+				detail
+			});
+		}
+	}
+>>>>>>> Stashed changes
 	function setPositsList(positsDetail: PositsType) {
 		positsList.push(positsDetail);
 	}
@@ -89,6 +99,9 @@ export function handlePositsListState() {
 		},
 		async handleUpdatePositsPosition(x: number, y: number, id: string) {
 			await handleUpdatePositsPosition(x, y, id);
+		},
+		async handleUpdatePositsComment(id: string, detail: string) {
+			await handleUpdatePositsComment(id, detail);
 		},
 		clearPositsList() {
 			positsList = [];

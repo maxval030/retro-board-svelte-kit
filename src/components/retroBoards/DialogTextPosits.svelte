@@ -3,7 +3,8 @@
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { dialogTextPositsState } from './dialogTextPositsState.svelte';
 	import { Textarea, type FormTextareaEvent } from '$lib/components/ui/textarea/index.js';
-	import { handlePositsState, type PositsType } from './positsState.svelte';
+	import { handlePositsListState, handlePositsState, type PositsType } from './positsState.svelte';
+	import { mount, onMount } from 'svelte';
 
 	type Props = {
 		positsSelected: PositsType;
@@ -23,9 +24,14 @@
 		commentRetro = props.positsSelected.detail;
 	});
 
-	function handlerSubmit() {
+	async function handlerSubmit() {
 		const { updatePositsText } = handlePositsState();
+		const { handleUpdatePositsComment } = handlePositsListState();
 		updatePositsText(props.positsSelected, commentRetro);
+		if (props?.positsSelected?.id) {
+			await handleUpdatePositsComment(props.positsSelected.id, commentRetro);
+		}
+
 		setOffDialogEditPosits();
 	}
 </script>

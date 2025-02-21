@@ -14,7 +14,7 @@
 
 	let teamId = $state<string>('');
 
-	const { teamIdState } = handlerRetroBoardState();
+	const { teamIdState, clearTeamId } = handlerRetroBoardState();
 
 	const { isOpen }: Props = $props();
 
@@ -27,7 +27,7 @@
 	});
 
 	onDestroy(() => {
-		handlerRetroBoardState().clearTeamId();
+		clearTeamId();
 	});
 </script>
 
