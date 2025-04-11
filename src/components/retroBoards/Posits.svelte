@@ -4,7 +4,7 @@
 	import { dialogTextPositsState } from './dialogTextPositsState.svelte';
 	import { handlePositsState, type PositsType } from './positsState.svelte';
 	import { privateButtonState } from './privateButtonState.svelte';
-	import { onMount } from 'svelte';
+
 	const fontSizeText = 16;
 	let props: {
 		positsItem: PositsType;

@@ -1,11 +1,7 @@
 import type { RectConfig } from 'konva/lib/shapes/Rect';
 import { colorPickState } from './colorPickState.svelte';
-// import { uuidv7 } from 'uuidv7';
-import {
-	Collections,
-	ItemsOnBoardTypeItemOptions
-	// type ItemsOnBoardResponse
-} from '$lib/pocketbase-types';
+
+import { Collections, ItemsOnBoardTypeItemOptions } from '$lib/pocketbase-types';
 import pb from '$lib/pocketbase';
 
 export type PositsType = RectConfig & {
@@ -14,6 +10,9 @@ export type PositsType = RectConfig & {
 
 let positsList = $state<PositsType[]>([]);
 let positsSelect = $state<PositsType | undefined>();
+
+let lastPositsId = $state<string>('');
+
 type PositionPointer = {
 	x: number;
 	y: number;
@@ -55,7 +54,8 @@ export function handlePositsListState() {
 		if (id) {
 			const posit = positsList.find((val) => val.id === id);
 			if (posit) {
-				setUpdatePositsList(posit);
+				lastPositsId = posit.id!;
+				setUpdatePosits(posit);
 			}
 			await pb.collection(Collections.ItemsOnBoard).update<PositsType>(id, {
 				x,
@@ -64,10 +64,17 @@ export function handlePositsListState() {
 		}
 	}
 
-	function setUpdatePositsList(positsDetail: PositsType) {
+	function setUpdatePosits(positsDetail: PositsType) {
 		const indexOfPositsList = positsList.findIndex((posit) => posit.id === positsDetail.id);
+		if (lastPositsId === positsDetail.id) {
+			return;
+		}
 
 		positsList[indexOfPositsList] = positsDetail;
+	}
+
+	function setPositsListForBoard(positsDetailList: PositsType[]) {
+		positsList = positsDetailList;
 	}
 
 	async function handleUpdatePositsComment(id: string, detail: string) {
@@ -88,9 +95,13 @@ export function handlePositsListState() {
 		setPositsList(positsList: PositsType[]) {
 			positsList.map((data) => setPositsList(data));
 		},
-		setUpdatePositsList(positsDetail: PositsType) {
-			setUpdatePositsList(positsDetail);
+		setUpdatePosits(positsDetail: PositsType) {
+			setUpdatePosits(positsDetail);
 		},
+		setPositsListForBoard(positsDetailList: PositsType[]) {
+			setPositsListForBoard(positsDetailList);
+		},
+
 		async handleCreatePosits(positionPointer: PositionPointer, boardId: string) {
 			await handleCreatePosits(positionPointer, boardId);
 		},

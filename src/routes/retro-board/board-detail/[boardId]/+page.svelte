@@ -28,7 +28,7 @@
 		clearPositsList,
 		setPositsList,
 		setPositsToList,
-		setUpdatePositsList,
+		setUpdatePosits,
 		handleUpdatePositsPosition
 	} = handlePositsListState();
 
@@ -41,6 +41,7 @@
 		// console.log('event>>>', event);
 
 		const { x, y } = tempEvent.position();
+		// const { x, y } = tempEvent.absolutePosition();
 		console.log('🚀 ~ handlerDragEnd ~  x, y:', x, y);
 
 		const positionX = defaultX + x;
@@ -48,7 +49,9 @@
 		const positionY = defaultY + y;
 		console.log('🚀 ~ handlerDragEnd ~ positionY:', positionY);
 
-		await handleUpdatePositsPosition(positionX, positionY, positsById?.id!);
+		if (positsById?.id) {
+			await handleUpdatePositsPosition(positionX, positionY, positsById.id);
+		}
 	}
 
 	function handlePositsChangeZIndex(event: KonvaDragTransformEvent) {
@@ -114,7 +117,7 @@
 		// getPositsListByBoardId(data.boardId);
 		await pbItemsOnBoard.subscribe('*', async ({ action, record }) => {
 			switch (action) {
-				case 'create':
+				case 'create': {
 					const itemOnBoard = await pb
 						.collection(Collections.ItemsOnBoard)
 						.getOne<ItemsOnBoardResponse>(record.id);
@@ -130,13 +133,18 @@
 						detail: itemOnBoard.detail
 					});
 					break;
-				case 'update':
-					console.log("TESTasdasd")
+				}
+				case 'update': {
 					const itemOnBoardUpdate = await pb
 						.collection(Collections.ItemsOnBoard)
 						.getOne<ItemsOnBoardResponse>(record.id);
+					// const itemOnBoardUpdate = await pb
+					// 	.collection(Collections.ItemsOnBoard)
+					// 	.getFullList<
+					// 		ItemsOnBoardResponse[]
+					// 	>({ filter: pb.filter('retroboardId={:boardId}', { boardId: data.boardId }) });
 
-					setUpdatePositsList({
+					setUpdatePosits({
 						id: itemOnBoardUpdate.id,
 						x: itemOnBoardUpdate.x,
 						y: itemOnBoardUpdate.y,
@@ -148,11 +156,13 @@
 					});
 
 					break;
-				case 'delete':
+				}
+				case 'delete': {
 					const positsListDelete = positsRenderList.filter((item) => item.id !== record.id);
 
 					positsRenderList = positsListDelete;
 					break;
+				}
 			}
 			// if (action === 'create') {
 			// 	// const { getPositsListByBoardId } = handlePositsListState();
@@ -173,9 +183,10 @@
 			// }
 		});
 	});
-	// onDestroy(() => {
-
-	// })
+	onDestroy(() => {
+		clearPositsList();
+		positsRenderList = [];
+	});
 </script>
 
 <div class={'relative'}>
@@ -192,9 +203,10 @@
 	<div>
 		<div class="mt-2 h-screen w-full border border-sky-500">
 			<!-- <Stage width={window.innerWidth} height={window.innerHeight} onclick={addPosits} draggable> -->
-			<Stage width={1920} height={1080} onclick={addPosits} draggable>
+			<!-- <Stage width={1920} height={1080} onclick={addPosits} draggable> -->
+			<Stage width={1920} height={1080} onclick={addPosits}>
 				<Layer width={window.innerWidth} height={window.innerHeight}>
-					{#each positsRenderList as positsItem, i}
+					{#each positsRenderList as positsItem}
 						<Posits
 							{positsItem}
 							ondragend={handlerDragEnd}

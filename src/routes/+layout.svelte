@@ -2,6 +2,7 @@
 	import '../app.css';
 
 	let { children } = $props();
+
 	// console.log('🚀 ~ data:', data);
 </script>
 
