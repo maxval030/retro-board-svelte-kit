@@ -106,6 +106,7 @@ export type ItemsOnBoardRecord = {
 	width: number
 	x?: number
 	y?: number
+	zIndex?: number
 }
 
 export enum RetroBoardsStatusOptions {
