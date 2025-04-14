@@ -4,6 +4,7 @@
 	import { dialogTextPositsState } from './dialogTextPositsState.svelte';
 	import { handlePositsState, type PositsType } from './positsState.svelte';
 	import { privateButtonState } from './privateButtonState.svelte';
+	import { handleBoardState } from '../../routes/retro-board/board-detail/[boardId]/boardState.svelte';
 
 	const fontSizeText = 16;
 	let props: {
@@ -30,11 +31,11 @@
 
 	$effect(() => {
 		const text = props.positsItem.detail;
-		const { isPrivateMode } = privateButtonState();
 
-		if (isPrivateMode) {
+		const { isBoardPrivate } = handleBoardState();
+
+		if (isBoardPrivate) {
 			positsText = text.replace(/./g, '~');
-
 			return;
 		}
 		positsText = text;

@@ -117,6 +117,7 @@ export type RetroBoardsRecord = {
 	created?: IsoDateString
 	createdById?: RecordIdString
 	id: string
+	isPrivateMode?: boolean
 	privateMode?: boolean
 	status?: RetroBoardsStatusOptions
 	teamId?: RecordIdString

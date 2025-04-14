@@ -2,7 +2,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import { dialogTextPositsState } from './dialogTextPositsState.svelte';
-	import { Textarea, type FormTextareaEvent } from '$lib/components/ui/textarea/index.js';
+	import { Textarea } from '$lib/components/ui/textarea/index.js';
 	import { handlePositsListState, handlePositsState, type PositsType } from './positsState.svelte';
 	import { mount, onMount } from 'svelte';
 
@@ -36,11 +36,12 @@
 	}
 </script>
 
-<Dialog.Root open={isOpen} onOpenChange={() => setOffDialogEditPosits()} controlledOpen>
+<Dialog.Root open={isOpen} onOpenChange={() => setOffDialogEditPosits()}>
 	<Dialog.Content class="sm:max-w-[425px]">
-		<Dialog.Header>
+		<!-- <Dialog.Header>
 			<Dialog.Title>Type your comment retro</Dialog.Title>
-		</Dialog.Header>
+		</Dialog.Header> -->
+		<div>Type your comment retro</div>
 		<div class="grid gap-4 py-4">
 			<div class="grid grid-cols-4 items-center gap-4">
 				<Textarea

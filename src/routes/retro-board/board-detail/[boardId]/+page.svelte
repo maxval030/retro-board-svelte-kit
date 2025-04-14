@@ -14,7 +14,12 @@
 	import DialogEditTextPosits from '../../../../components/retroBoards/DialogTextPosits.svelte';
 	import { onDestroy, onMount } from 'svelte';
 	import pb from '$lib/pocketbase';
-	import { Collections, type ItemsOnBoardResponse } from '$lib/pocketbase-types';
+	import {
+		Collections,
+		type ItemsOnBoardResponse,
+		type RetroBoardsResponse
+	} from '$lib/pocketbase-types';
+	import { handleBoardState } from './boardState.svelte';
 
 	let { data }: { data: { boardId: string } } = $props();
 
@@ -41,13 +46,13 @@
 		// console.log('event>>>', event);
 
 		const { x, y } = tempEvent.position();
+
+		console.log(tempEvent.index);
 		// const { x, y } = tempEvent.absolutePosition();
-		console.log('🚀 ~ handlerDragEnd ~  x, y:', x, y);
 
 		const positionX = defaultX + x;
-		console.log('🚀 ~ handlerDragEnd ~ positionX:', positionX);
+
 		const positionY = defaultY + y;
-		console.log('🚀 ~ handlerDragEnd ~ positionY:', positionY);
 
 		if (positsById?.id) {
 			await handleUpdatePositsPosition(positionX, positionY, positsById.id);
@@ -93,7 +98,7 @@
 
 	onMount(async () => {
 		const pbItemsOnBoard = pb.collection(Collections.ItemsOnBoard);
-		// const { getPositsListByBoardId } = handlePositsListState();
+
 		const result = await pbItemsOnBoard.getList<ItemsOnBoardResponse>(1, 20000, {
 			filter: pb.filter('retroboardId={:boardId}', { boardId: data.boardId })
 		});
@@ -183,6 +188,26 @@
 			// }
 		});
 	});
+
+	onMount(async () => {
+		const { setIsBoardPrivate } = handleBoardState();
+		const pbRetroBoards = pb.collection(Collections.RetroBoards);
+		const itemsOnBoard = await pbRetroBoards.getOne(data.boardId);
+
+		setIsBoardPrivate(itemsOnBoard.isPrivateMode);
+		await pbRetroBoards.subscribe('*', async ({ action, record }) => {
+			switch (action) {
+				case 'update': {
+					// const updated = await pb
+					// 	.collection(Collections.RetroBoards)
+					// 	.getOne<RetroBoardsResponse>(data.boardId);
+
+					setIsBoardPrivate(record.isPrivateMode);
+				}
+			}
+		});
+	});
+
 	onDestroy(() => {
 		clearPositsList();
 		positsRenderList = [];
@@ -197,7 +222,7 @@
 			Click to create posits
 		</label>
 		<ColorPick />
-		<PrivateButton />
+		<PrivateButton boardId={data.boardId} />
 	</div>
 
 	<div>
