@@ -7,10 +7,11 @@
 	const { boardId } = $props();
 	const { isBoardPrivate, updateBoardIsPrivate, setIsBoardPrivate } = handleBoardState();
 
-	let isPrivate = $state(isBoardPrivate);
+	let isPrivate = $state(true);
 
 	async function handleUpdateBoardIsPrivate(isPrivate: boolean) {
 		if (boardId) {
+			setIsBoardPrivate(isPrivate);
 			await updateBoardIsPrivate(boardId, isPrivate);
 		}
 	}
@@ -22,7 +23,7 @@
 </script>
 
 <div>
-	<Button onclick={handleUpdateBoardIsPrivate}>
+	<!-- <Button onclick={handleUpdateBoardIsPrivate}>
 		{#if isPrivate}
 			<Icon icon="iconamoon:eye-off-light" class={'mr-1'} />Private Mode
 		{:else}
@@ -33,5 +34,12 @@
 		type="checkbox"
 		bind:checked={isPrivate}
 		on:change={(e) => handleUpdateBoardIsPrivate(e?.target?.checked)}
-	/>
+	/> -->
+	<select
+		bind:value={isPrivate}
+		on:change={(e) => handleUpdateBoardIsPrivate(e?.target?.value === 'true')}
+	>
+		<option value={true}><Icon icon="iconamoon:eye-off-light" class={'mr-1'} />Private Mode</option>
+		<option value={false}><Icon icon="majesticons:eye-line" class={'mr-1'} />Public Mode</option>
+	</select>
 </div>

@@ -25,8 +25,9 @@
 
 	let positsRenderList = $state<PositsType[]>([]);
 	let posits = $state<PositsType | undefined>();
-	let clickToCreatePosits = $state(true);
+	let clickToCreatePosits = $state(false);
 	let isOpenDialogEdit = $state(false);
+	let isBoardPrivate = $state(false);
 
 	const {
 		handleCreatePosits,
@@ -34,7 +35,8 @@
 		setPositsList,
 		setPositsToList,
 		setUpdatePosits,
-		handleUpdatePositsPosition
+		handleUpdatePositsPosition,
+		setDeletePosits
 	} = handlePositsListState();
 
 	async function handlerDragEnd(event: KonvaDragTransformEvent) {
@@ -47,7 +49,6 @@
 
 		const { x, y } = tempEvent.position();
 
-		console.log(tempEvent.index);
 		// const { x, y } = tempEvent.absolutePosition();
 
 		const positionX = defaultX + x;
@@ -81,7 +82,7 @@
 
 	$effect(() => {
 		const { positsList } = handlePositsListState();
-
+		console.log('positsList>>>', positsList);
 		positsRenderList = positsList;
 	});
 
@@ -163,29 +164,10 @@
 					break;
 				}
 				case 'delete': {
-					const positsListDelete = positsRenderList.filter((item) => item.id !== record.id);
-
-					positsRenderList = positsListDelete;
+					setDeletePosits(record.id);
 					break;
 				}
 			}
-			// if (action === 'create') {
-			// 	// const { getPositsListByBoardId } = handlePositsListState();
-			// 	const itemOnBoard = await pb
-			// 		.collection(Collections.ItemsOnBoard)
-			// 		.getOne<ItemsOnBoardResponse>(record.id);
-
-			// 	setPositsToList({
-			// 		id: itemOnBoard.id,
-			// 		x: itemOnBoard.x,
-			// 		y: itemOnBoard.y,
-			// 		width: itemOnBoard.width,
-			// 		height: itemOnBoard.height,
-			// 		fill: itemOnBoard.fill,
-			// 		draggable: itemOnBoard.draggable,
-			// 		detail: itemOnBoard.detail
-			// 	});
-			// }
 		});
 	});
 
@@ -198,11 +180,8 @@
 		await pbRetroBoards.subscribe('*', async ({ action, record }) => {
 			switch (action) {
 				case 'update': {
-					// const updated = await pb
-					// 	.collection(Collections.RetroBoards)
-					// 	.getOne<RetroBoardsResponse>(data.boardId);
-
 					setIsBoardPrivate(record.isPrivateMode);
+					break;
 				}
 			}
 		});
@@ -229,7 +208,7 @@
 		<div class="mt-2 h-screen w-full border border-sky-500">
 			<!-- <Stage width={window.innerWidth} height={window.innerHeight} onclick={addPosits} draggable> -->
 			<!-- <Stage width={1920} height={1080} onclick={addPosits} draggable> -->
-			<Stage width={1920} height={1080} onclick={addPosits}>
+			<Stage width={1920} height={1080} onclick={addPosits} draggable>
 				<Layer width={window.innerWidth} height={window.innerHeight}>
 					{#each positsRenderList as positsItem}
 						<Posits

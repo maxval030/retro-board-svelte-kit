@@ -34,6 +34,15 @@
 
 		setOffDialogEditPosits();
 	}
+
+	async function handlerDelete() {
+		const { handleDeletePosits } = handlePositsListState();
+		// deletePosits(props.positsSelected);
+		if (props?.positsSelected?.id) {
+			await handleDeletePosits(props.positsSelected.id);
+		}
+		setOffDialogEditPosits();
+	}
 </script>
 
 <Dialog.Root open={isOpen} onOpenChange={() => setOffDialogEditPosits()}>
@@ -53,6 +62,7 @@
 			</div>
 		</div>
 		<Dialog.Footer>
+			<Button onclick={handlerDelete} variant="destructive">Delete</Button>
 			<Button onclick={handlerSubmit}>Submit</Button>
 		</Dialog.Footer>
 	</Dialog.Content>

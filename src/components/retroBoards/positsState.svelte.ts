@@ -64,6 +64,20 @@ export function handlePositsListState() {
 		}
 	}
 
+	async function handleUpdatePositsComment(id: string, detail: string) {
+		if (id) {
+			await pb.collection(Collections.ItemsOnBoard).update(id, {
+				detail
+			});
+		}
+	}
+
+	async function handleDeletePosits(id: string) {
+		if (id) {
+			await pb.collection(Collections.ItemsOnBoard).delete(id);
+		}
+	}
+
 	function setUpdatePosits(positsDetail: PositsType) {
 		const indexOfPositsList = positsList.findIndex((posit) => posit.id === positsDetail.id);
 		if (lastPositsId === positsDetail.id) {
@@ -73,17 +87,19 @@ export function handlePositsListState() {
 		positsList[indexOfPositsList] = positsDetail;
 	}
 
+	function setDeletePosits(id: string) {
+		const indexOfPositsList = positsList.findIndex((posit) => posit.id === id);
+		if (indexOfPositsList === -1) {
+			return;
+		}
+
+		positsList.splice(indexOfPositsList, 1);
+	}
+
 	function setPositsListForBoard(positsDetailList: PositsType[]) {
 		positsList = positsDetailList;
 	}
 
-	async function handleUpdatePositsComment(id: string, detail: string) {
-		if (id) {
-			await pb.collection(Collections.ItemsOnBoard).update(id, {
-				detail
-			});
-		}
-	}
 	function setPositsList(positsDetail: PositsType) {
 		positsList.push(positsDetail);
 	}
@@ -101,7 +117,9 @@ export function handlePositsListState() {
 		setPositsListForBoard(positsDetailList: PositsType[]) {
 			setPositsListForBoard(positsDetailList);
 		},
-
+		setDeletePosits(id: string) {
+			setDeletePosits(id);
+		},
 		async handleCreatePosits(positionPointer: PositionPointer, boardId: string) {
 			await handleCreatePosits(positionPointer, boardId);
 		},
@@ -110,6 +128,9 @@ export function handlePositsListState() {
 		},
 		async handleUpdatePositsComment(id: string, detail: string) {
 			await handleUpdatePositsComment(id, detail);
+		},
+		async handleDeletePosits(id: string) {
+			await handleDeletePosits(id);
 		},
 		clearPositsList() {
 			positsList = [];
