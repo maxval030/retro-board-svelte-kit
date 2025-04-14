@@ -35,6 +35,7 @@
 		bind:checked={isPrivate}
 		on:change={(e) => handleUpdateBoardIsPrivate(e?.target?.checked)}
 	/> -->
+	<p>ถ้า mode ไม่เปลี่ยนให้กด สลับไปมา</p>
 	<select
 		bind:value={isPrivate}
 		on:change={(e) => handleUpdateBoardIsPrivate(e?.target?.value === 'true')}
