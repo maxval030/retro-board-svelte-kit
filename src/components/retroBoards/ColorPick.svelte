@@ -20,5 +20,6 @@
 			id={color}
 		></div>
 	{/each}
+	Posit Color:
 	<div style="background-color: {color}; width: 50px; height: 50px; display: inline-block;"></div>
 </div>

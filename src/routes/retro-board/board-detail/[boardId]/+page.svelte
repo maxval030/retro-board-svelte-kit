@@ -198,7 +198,7 @@
 		<Button onclick={clearPositsList}>clear all</Button>
 		<label>
 			<input type="checkbox" bind:checked={clickToCreatePosits} />
-			Click to create posits
+			Checked for add posit.
 		</label>
 		<ColorPick />
 		<PrivateButton boardId={data.boardId} />
@@ -206,8 +206,6 @@
 
 	<div>
 		<div class="mt-2 h-screen w-full border border-sky-500">
-			<!-- <Stage width={window.innerWidth} height={window.innerHeight} onclick={addPosits} draggable> -->
-			<!-- <Stage width={1920} height={1080} onclick={addPosits} draggable> -->
 			<Stage width={1920} height={1080} onclick={addPosits} draggable>
 				<Layer width={window.innerWidth} height={window.innerHeight}>
 					{#each positsRenderList as positsItem}
