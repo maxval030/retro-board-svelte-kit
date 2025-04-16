@@ -3,7 +3,7 @@
 	import type { KonvaDragTransformEvent, KonvaMouseEvent } from 'svelte-konva';
 	import { dialogTextPositsState } from './dialogTextPositsState.svelte';
 	import { handlePositsState, type PositsType } from './positsState.svelte';
-	import { privateButtonState } from './privateButtonState.svelte';
+	// import { privateButtonState } from './privateButtonState.svelte';
 	import { handleBoardState } from '../../routes/retro-board/board-detail/[boardId]/boardState.svelte';
 
 	const fontSizeText = 16;

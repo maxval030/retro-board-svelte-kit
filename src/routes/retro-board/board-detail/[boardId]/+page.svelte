@@ -16,8 +16,8 @@
 	import pb from '$lib/pocketbase';
 	import {
 		Collections,
-		type ItemsOnBoardResponse,
-		type RetroBoardsResponse
+		type ItemsOnBoardResponse
+		// type RetroBoardsResponse
 	} from '$lib/pocketbase-types';
 	import { handleBoardState } from './boardState.svelte';
 
@@ -27,7 +27,7 @@
 	let posits = $state<PositsType | undefined>();
 	let clickToCreatePosits = $state(false);
 	let isOpenDialogEdit = $state(false);
-	let isBoardPrivate = $state(false);
+	// let isBoardPrivate = $state(false);
 
 	const {
 		handleCreatePosits,
