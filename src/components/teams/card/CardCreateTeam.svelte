@@ -6,9 +6,9 @@
 	let isOpen = $state(false);
 
 	const { setIsOpenDialogCreateTeam } = handleCardCreateTeamState();
-	async function addNewTeam() {
-		console.log('Add New Team');
-	}
+	// async function addNewTeam() {
+	// 	console.log('Add New Team');
+	// }
 
 	$effect(() => {
 		const { isOpenDialogCreateTeam } = handleCardCreateTeamState();

@@ -82,7 +82,7 @@
 
 	$effect(() => {
 		const { positsList } = handlePositsListState();
-		console.log('positsList>>>', positsList);
+
 		positsRenderList = positsList;
 	});
 
@@ -141,9 +141,7 @@
 					break;
 				}
 				case 'update': {
-					const itemOnBoardUpdate = await pb
-						.collection(Collections.ItemsOnBoard)
-						.getOne<ItemsOnBoardResponse>(record.id);
+					const itemOnBoardUpdate = record;
 					// const itemOnBoardUpdate = await pb
 					// 	.collection(Collections.ItemsOnBoard)
 					// 	.getFullList<

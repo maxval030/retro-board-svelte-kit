@@ -80,6 +80,8 @@ export function handlePositsListState() {
 
 	function setUpdatePosits(positsDetail: PositsType) {
 		const indexOfPositsList = positsList.findIndex((posit) => posit.id === positsDetail.id);
+		//if lastPositsId === positsDetail.id, this not move more position in current session
+		console.log(lastPositsId, positsDetail.id);
 		if (lastPositsId === positsDetail.id) {
 			return;
 		}
