@@ -62,9 +62,9 @@
 
 	function handlePositsChangeZIndex(event: KonvaDragTransformEvent) {
 		// if (clickToCreatePosits) return;
-		let target = event.target;
+		// let target = event.target;
 
-		target.moveToTop();
+		// target.moveToTop();
 	}
 
 	async function addPosits(e: KonvaMouseEvent) {
