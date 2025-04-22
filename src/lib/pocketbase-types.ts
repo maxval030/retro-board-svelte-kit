@@ -92,6 +92,7 @@ export enum ItemsOnBoardTypeItemOptions {
 	"posits" = "posits",
 }
 export type ItemsOnBoardRecord = {
+	actionId?: string
 	created?: IsoDateString
 	createdByUserId?: RecordIdString
 	detail?: string

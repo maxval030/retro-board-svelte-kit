@@ -48,12 +48,16 @@
 		// console.log('event>>>', event);
 
 		const { x, y } = tempEvent.position();
+		const absolutePosition = tempEvent.absolutePosition();
 
 		// const { x, y } = tempEvent.absolutePosition();
 
-		const positionX = defaultX + x;
+		const positionX = defaultX + absolutePosition.x;
 
-		const positionY = defaultY + y;
+		const positionY = defaultY + absolutePosition.y;
+		// const positionX = defaultX + x;
+
+		// const positionY = defaultY + y;
 
 		if (positsById?.id) {
 			await handleUpdatePositsPosition(positionX, positionY, positsById.id);
@@ -63,7 +67,6 @@
 	function handlePositsChangeZIndex(event: KonvaDragTransformEvent) {
 		// if (clickToCreatePosits) return;
 		// let target = event.target;
-
 		// target.moveToTop();
 	}
 
@@ -99,65 +102,95 @@
 
 	onMount(async () => {
 		const pbItemsOnBoard = pb.collection(Collections.ItemsOnBoard);
-
-		const result = await pbItemsOnBoard.getList<ItemsOnBoardResponse>(1, 20000, {
-			filter: pb.filter('retroboardId={:boardId}', { boardId: data.boardId })
-		});
-
-		if (result.items.length > 0) {
-			const positsList = result.items.map((item) => {
-				return {
-					id: item.id,
-					x: item.x,
-					y: item.y,
-					width: item.width,
-					height: item.height,
-					fill: item.fill,
-					draggable: item.draggable,
-					detail: item.detail
-				};
+		async function getPositsListByBoardId(boardId: string) {
+			const result = await pbItemsOnBoard.getFullList<ItemsOnBoardResponse>({
+				filter: pb.filter('retroboardId={:boardId}', { boardId })
 			});
 
-			setPositsList(positsList);
+			if (result.length > 0) {
+				const positsList = result.map((item) => {
+					return {
+						id: item.id,
+						x: item.x,
+						y: item.y,
+						width: item.width,
+						height: item.height,
+						fill: item.fill,
+						draggable: item.draggable,
+						detail: item.detail
+					};
+				});
+
+				setPositsList(positsList);
+			}
 		}
+		await getPositsListByBoardId(data.boardId);
+		// const result = await pbItemsOnBoard.getFullList<ItemsOnBoardResponse>({
+		// 	filter: pb.filter('retroboardId={:boardId}', { boardId: data.boardId })
+		// });
+
+		// if (result.length > 0) {
+		// 	const positsList = result.map((item) => {
+		// 		return {
+		// 			id: item.id,
+		// 			x: item.x,
+		// 			y: item.y,
+		// 			width: item.width,
+		// 			height: item.height,
+		// 			fill: item.fill,
+		// 			draggable: item.draggable,
+		// 			detail: item.detail
+		// 		};
+		// 	});
+
+		// 	setPositsList(positsList);
+		// }
 		// getPositsListByBoardId(data.boardId);
 		await pbItemsOnBoard.subscribe('*', async ({ action, record }) => {
 			switch (action) {
 				case 'create': {
-					const itemOnBoard = await pb
-						.collection(Collections.ItemsOnBoard)
-						.getOne<ItemsOnBoardResponse>(record.id);
+					// const itemOnBoard = await pb
+					// 	.collection(Collections.ItemsOnBoard)
+					// 	.getOne<ItemsOnBoardResponse>(record.id);
 
-					setPositsToList({
-						id: itemOnBoard.id,
-						x: itemOnBoard.x,
-						y: itemOnBoard.y,
-						width: itemOnBoard.width,
-						height: itemOnBoard.height,
-						fill: itemOnBoard.fill,
-						draggable: itemOnBoard.draggable,
-						detail: itemOnBoard.detail
-					});
+					// setPositsToList({
+					// 	id: itemOnBoard.id,
+					// 	x: itemOnBoard.x,
+					// 	y: itemOnBoard.y,
+					// 	width: itemOnBoard.width,
+					// 	height: itemOnBoard.height,
+					// 	fill: itemOnBoard.fill,
+					// 	draggable: itemOnBoard.draggable,
+					// 	detail: itemOnBoard.detail
+					// });
+					await getPositsListByBoardId(data.boardId);
+
 					break;
 				}
 				case 'update': {
 					const itemOnBoardUpdate = record;
-					// const itemOnBoardUpdate = await pb
-					// 	.collection(Collections.ItemsOnBoard)
-					// 	.getFullList<
-					// 		ItemsOnBoardResponse[]
-					// 	>({ filter: pb.filter('retroboardId={:boardId}', { boardId: data.boardId }) });
+					const { actionIdLocal, clearActionIdLocal } = handlePositsListState();
 
-					setUpdatePosits({
-						id: itemOnBoardUpdate.id,
-						x: itemOnBoardUpdate.x,
-						y: itemOnBoardUpdate.y,
-						width: itemOnBoardUpdate.width,
-						height: itemOnBoardUpdate.height,
-						fill: itemOnBoardUpdate.fill,
-						draggable: itemOnBoardUpdate.draggable,
-						detail: itemOnBoardUpdate.detail
-					});
+					console.log('{x,y}>>>', itemOnBoardUpdate.x, itemOnBoardUpdate.y);
+					if (actionIdLocal !== itemOnBoardUpdate.actionId) {
+						console.log('actionIdLocal>>>', actionIdLocal);
+						// setUpdatePosits({
+						// 	id: itemOnBoardUpdate.id,
+						// 	x: itemOnBoardUpdate.x,
+						// 	y: itemOnBoardUpdate.y,
+						// 	width: itemOnBoardUpdate.width,
+						// 	height: itemOnBoardUpdate.height,
+						// 	fill: itemOnBoardUpdate.fill,
+						// 	draggable: itemOnBoardUpdate.draggable,
+						// 	detail: itemOnBoardUpdate.detail
+						// });
+
+						await getPositsListByBoardId(data.boardId);
+					}
+
+					if (actionIdLocal) {
+						clearActionIdLocal();
+					}
 
 					break;
 				}
@@ -204,7 +237,7 @@
 
 	<div>
 		<div class="mt-2 h-screen w-full border border-sky-500">
-			<Stage width={1920} height={1080} onclick={addPosits} draggable>
+			<Stage width={1920} height={1080} onclick={addPosits}>
 				<Layer width={window.innerWidth} height={window.innerHeight}>
 					{#each positsRenderList as positsItem}
 						<Posits

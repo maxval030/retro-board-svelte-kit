@@ -56,6 +56,7 @@
 		"socket.io-client": "^4.8.1",
 		"svelte-konva": "1.0.0-next.2",
 		"tailwindcss-animate": "^1.0.7",
+		"uuid": "^11.1.0",
 		"uuidv7": "^1.0.2"
 	}
 }

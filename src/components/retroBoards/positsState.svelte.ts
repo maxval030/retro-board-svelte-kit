@@ -1,6 +1,6 @@
 import type { RectConfig } from 'konva/lib/shapes/Rect';
 import { colorPickState } from './colorPickState.svelte';
-
+import { v4 as uuidv4 } from 'uuid';
 import { Collections, ItemsOnBoardTypeItemOptions } from '$lib/pocketbase-types';
 import pb from '$lib/pocketbase';
 
@@ -11,7 +11,7 @@ export type PositsType = RectConfig & {
 let positsList = $state<PositsType[]>([]);
 let positsSelect = $state<PositsType | undefined>();
 
-let lastPositsId = $state<string>('');
+let actionIdLocal = $state<string | null>(null);
 
 type PositionPointer = {
 	x: number;
@@ -52,14 +52,18 @@ export function handlePositsListState() {
 
 	async function handleUpdatePositsPosition(x: number, y: number, id: string) {
 		if (id) {
-			const posit = positsList.find((val) => val.id === id);
-			if (posit) {
-				lastPositsId = posit.id!;
-				setUpdatePosits(posit);
+			// const posit = positsList.find((val) => val.id === id);
+			if (actionIdLocal === null) {
+				actionIdLocal = uuidv4();
 			}
+			// if (posit) {
+			// 	lastPositsId = posit.id!;
+			// 	setUpdatePosits(posit);
+			// }
 			await pb.collection(Collections.ItemsOnBoard).update<PositsType>(id, {
 				x,
-				y
+				y,
+				actionId: actionIdLocal
 			});
 		}
 	}
@@ -81,10 +85,10 @@ export function handlePositsListState() {
 	function setUpdatePosits(positsDetail: PositsType) {
 		const indexOfPositsList = positsList.findIndex((posit) => posit.id === positsDetail.id);
 		//if lastPositsId === positsDetail.id, this not move more position in current session
-		console.log(lastPositsId, positsDetail.id);
-		if (lastPositsId === positsDetail.id) {
-			return;
-		}
+		// console.log(lastPositsId, positsDetail.id);
+		// if (lastPositsId === positsDetail.id) {
+		// 	return;
+		// }
 
 		positsList[indexOfPositsList] = positsDetail;
 	}
@@ -110,8 +114,9 @@ export function handlePositsListState() {
 		setPositsToList(positsDetail: PositsType) {
 			setPositsList(positsDetail);
 		},
-		setPositsList(positsList: PositsType[]) {
-			positsList.map((data) => setPositsList(data));
+		setPositsList(positsListVal: PositsType[]) {
+			// positsList.map((data) => setPositsList(data));
+			positsList = positsListVal;
 		},
 		setUpdatePosits(positsDetail: PositsType) {
 			setUpdatePosits(positsDetail);
@@ -137,8 +142,14 @@ export function handlePositsListState() {
 		clearPositsList() {
 			positsList = [];
 		},
+		clearActionIdLocal() {
+			actionIdLocal = null;
+		},
 		get positsList() {
 			return positsList;
+		},
+		get actionIdLocal() {
+			return actionIdLocal;
 		}
 	};
 }
